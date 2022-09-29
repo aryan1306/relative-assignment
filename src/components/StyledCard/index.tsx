@@ -18,18 +18,10 @@ interface IStyledProps {
 	price: string;
 	profitOrLoss: string;
 	tvl: string;
-	coin?: CoinType;
-	pairs?: string[];
+	coin: CoinType;
 }
 
-function StyledCard({
-	name,
-	price,
-	profitOrLoss,
-	tvl,
-	pairs,
-	coin,
-}: IStyledProps) {
+function StyledCard({ name, price, profitOrLoss, tvl, coin }: IStyledProps) {
 	const [coinType, setCoinType] = useState("");
 	const [pairImg, setPairImg] = useState<string[]>([]);
 
