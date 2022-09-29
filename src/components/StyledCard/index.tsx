@@ -9,6 +9,8 @@ import SOL_BIG from "../../assets/svg/SOL.svg";
 import BNB_BIG from "../../assets/svg/BNB.svg";
 import SHIB from "../../assets/svg/SHIB.svg";
 import ETH_BIG from "../../assets/svg/ETH.svg";
+import PopularPair from "../PopularPair";
+import Label from "../Label";
 
 type CoinType = "ETH" | "BTC" | "SHIB" | "SOL" | "BNB";
 interface IStyledProps {
@@ -70,9 +72,7 @@ function StyledCard({
 						"linear-gradient(180deg, var(--tw-gradient-from) 0%, var(--tw-gradient-to) 107.43%)",
 				}}>
 				<div className='mt-[4.6rem] w-[290px] flex flex-col justify-center'>
-					<p className='text-xs text-label-color text-center mt-[4.5rem]'>
-						{name}
-					</p>
+					<Label extraClass='mt-[4.5rem]'>{name}</Label>
 					<div
 						id='pill-value'
 						className='mt-4 bg-gradient-to-b from-border-light to-border-dark rounded-full mx-5'>
@@ -90,7 +90,8 @@ function StyledCard({
 							</p>
 						</div>
 					</div>
-					<p className='text-xs text-label-color text-center mt-4'>Price</p>
+					<Label extraClass='mt-4'>Price</Label>
+
 					<div
 						id='pill-value'
 						className='mt-3 bg-gradient-to-b from-border-light to-border-dark rounded-full mx-5'>
@@ -98,20 +99,9 @@ function StyledCard({
 							<p className='text-base text-white text-center'>{tvl}</p>
 						</div>
 					</div>
-					<p className='text-xs text-label-color text-center mt-2'>TVL</p>
-					<div className='flex justify-center mt-5 bg-pill-color rounded-full p-2 mx-20'>
-						{pairImg.map((img, index) => (
-							<img
-								key={index}
-								src={img}
-								alt='sol'
-								className={`${index === 2 ? "" : "mr-3"}`}
-							/>
-						))}
-					</div>
-					<p className='text-xs text-label-color text-center mt-2'>
-						Popular pairs
-					</p>
+					<Label extraClass='mt-2'>TVL</Label>
+					<PopularPair pairImg={pairImg} />
+					<Label extraClass='mt-2'>Popular pairs</Label>
 				</div>
 			</div>
 		</div>
