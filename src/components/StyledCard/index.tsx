@@ -1,39 +1,118 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./StyledCard.css";
+import SOL from "../../assets/svg/SOL-small.svg";
+import BNB from "../../assets/svg/BNB-small.svg";
+import ETH from "../../assets/svg/ETH-small.svg";
+import BTC from "../../assets/svg/BTC-small.svg";
+import BTC_BIG from "../../assets/svg/BTC.svg";
+import SOL_BIG from "../../assets/svg/SOL.svg";
+import BNB_BIG from "../../assets/svg/BNB.svg";
+import SHIB from "../../assets/svg/SHIB.svg";
+import ETH_BIG from "../../assets/svg/ETH.svg";
 
+type CoinType = "ETH" | "BTC" | "SHIB" | "SOL" | "BNB";
 interface IStyledProps {
-	children?: React.ReactNode;
+	name: string;
+	price: string;
+	profitOrLoss: string;
+	tvl: string;
+	coin?: CoinType;
+	pairs?: string[];
 }
 
-function StyledCard({ children }: IStyledProps) {
+function StyledCard({
+	name,
+	price,
+	profitOrLoss,
+	tvl,
+	pairs,
+	coin,
+}: IStyledProps) {
+	const [coinType, setCoinType] = useState("");
+	const [pairImg, setPairImg] = useState<string[]>([]);
+
+	useEffect(() => {
+		if (coin === "BNB") {
+			setCoinType(BNB_BIG);
+			setPairImg([SOL, ETH, BNB]);
+		} else if (coin === "BTC") {
+			setCoinType(BTC_BIG);
+			setPairImg([SOL, ETH, BNB]);
+		} else if (coin === "ETH") {
+			setCoinType(ETH_BIG);
+			setPairImg([SOL, BTC, BNB]);
+		} else if (coin === "SHIB") {
+			setCoinType(SHIB);
+			setPairImg([SOL, ETH, BNB]);
+		} else {
+			setCoinType(SOL_BIG);
+			setPairImg([BTC, ETH, BNB]);
+		}
+	}, []);
+
 	return (
-		<div
-			className='card-clip w-[399px] h-[399px] mt-10 from-light-gray to-dark-gray'
-			style={{
-				background:
-					"linear-gradient(180deg, var(--tw-gradient-from) 0%, var(--tw-gradient-to) 107.43%)",
-			}}>
-			<div className='mt-[4.6rem] w-[290px] flex flex-col justify-center'>
-				<p className='text-xs text-label-color text-center'>Ethereum</p>
-				<div
-					id='pill-value'
-					className='mt-4 bg-gradient-to-br from-border-light to-border-dark rounded-full mx-5'>
-					<div className='bg-pill-color p-2 rounded-full m-[0.45px] flex items-center'>
-						<p className='text-base text-white text-center flex-grow ml-10'>
-							$1,466.50
-						</p>
-						<p className='text-xs text-red-600 text-center pr-1'>-1.09%</p>
+		<div>
+			<img
+				src={coinType}
+				alt=''
+				className='relative w-8 top-[261px] left-[135px]'
+			/>
+			<img
+				src={coinType}
+				alt=''
+				className='relative left-[121px] top-[202px] z-[1]'
+			/>
+			<div className='bg-dark-gray backdrop-blur-2xl rounded-full h-[100px] w-[100px] relative top-[128px] bottom-[5px] left-[96px] '></div>
+			<div
+				className='card-clip w-[399px] h-[399px] mt-10 from-light-gray to-dark-gray backdrop-blur-2xl'
+				style={{
+					background:
+						"linear-gradient(180deg, var(--tw-gradient-from) 0%, var(--tw-gradient-to) 107.43%)",
+				}}>
+				<div className='mt-[4.6rem] w-[290px] flex flex-col justify-center'>
+					<p className='text-xs text-label-color text-center mt-[4.5rem]'>
+						{name}
+					</p>
+					<div
+						id='pill-value'
+						className='mt-4 bg-gradient-to-b from-border-light to-border-dark rounded-full mx-5'>
+						<div className='bg-pill-color p-2 rounded-full m-[0.45px] flex items-center'>
+							<p className='text-base text-white text-center flex-grow ml-10'>
+								${price}
+							</p>
+							<p
+								className={`text-xs ${
+									parseFloat(profitOrLoss) > 0
+										? "text-green-500"
+										: "text-red-600"
+								} text-center pr-1`}>
+								{profitOrLoss}%
+							</p>
+						</div>
 					</div>
-				</div>
-				<p className='text-xs text-label-color text-center mt-4'>Price</p>
-				<div
-					id='pill-value'
-					className='mt-3 bg-gradient-to-br from-border-light to-border-dark rounded-full mx-5'>
-					<div className='bg-pill-color p-2 rounded-full m-[0.5px]'>
-						<p className='text-base text-white text-center'>$60,466</p>
+					<p className='text-xs text-label-color text-center mt-4'>Price</p>
+					<div
+						id='pill-value'
+						className='mt-3 bg-gradient-to-b from-border-light to-border-dark rounded-full mx-5'>
+						<div className='bg-pill-color p-2 rounded-full m-[0.5px]'>
+							<p className='text-base text-white text-center'>{tvl}</p>
+						</div>
 					</div>
+					<p className='text-xs text-label-color text-center mt-2'>TVL</p>
+					<div className='flex justify-center mt-5 bg-pill-color rounded-full p-2 mx-20'>
+						{pairImg.map((img, index) => (
+							<img
+								key={index}
+								src={img}
+								alt='sol'
+								className={`${index === 2 ? "" : "mr-3"}`}
+							/>
+						))}
+					</div>
+					<p className='text-xs text-label-color text-center mt-2'>
+						Popular pairs
+					</p>
 				</div>
-				<p className='text-xs text-label-color text-center mt-4'>TVL</p>
 			</div>
 		</div>
 	);
